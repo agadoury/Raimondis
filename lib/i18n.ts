@@ -24,7 +24,6 @@ const en = {
   edition: "4th Edition",
   deadline: (date: string) => `Nominations close ${date}`,
   switchLang: "Passer en français",
-  switchLangShort: "FR",
 
   // Landing: explanations + "Who are you?" + 4-digit code
   how: [
@@ -32,7 +31,10 @@ const en = {
     "Your recommendations influence who wins what at the Raimondis awards.",
     "Vote for as many colleagues as possible. You can vote for the same person more than once.",
   ],
-  howDeadline: (date: string) => `Deadline: ${date}. Only the organizer sees what you submit.`,
+  tagline: ["Your colleagues.", "Your categories.", "One big night."],
+  marquee: ["Nominations are open", "Les Raimondis", "4th Edition", "Vote for everyone", "No spoilers"],
+  deadlineLabel: "Deadline",
+  privacy: "Only the organizer sees what you submit.",
   whoTitle: "Who are you?",
   whoHint: "Pick your name. Your own card will be hidden, so no self-nominations.",
   searchNames: "Search your name",
@@ -52,9 +54,10 @@ const en = {
   clearSearch: "Clear search",
   nominate: (name: string) => `Nominate ${name}`,
   awardsGiven: (n: number) => (n === 1 ? "1 award" : `${n} awards`),
+  nominateShort: "Nominate",
 
   // Nomination dialog
-  dialogTitle: (name: string) => `An award for ${name}`,
+  dialogEyebrow: "An award for",
   awardName: "Award name",
   awardExamples: [
     "The Inbox Zero Award",
@@ -139,14 +142,16 @@ const fr: typeof en = {
   edition: "4e édition",
   deadline: (date) => `Mises en nomination jusqu'au ${date}`,
   switchLang: "Switch to English",
-  switchLangShort: "EN",
 
   how: [
     "Recommande tes collègues pour des catégories de prix\u00a0: invente la catégorie (par exemple «\u00a0Le prix Boîte de réception zéro\u00a0») et dis-nous pourquoi.",
     "Tes recommandations influenceront qui gagne quoi aux prix Raimondis.",
     "Vote pour le plus de collègues possible. Tu peux voter plus d'une fois pour la même personne.",
   ],
-  howDeadline: (date) => `Date limite\u00a0: ${date}. Seul l'organisateur voit ce que tu soumets.`,
+  tagline: ["Tes collègues.", "Tes catégories.", "Une grande soirée."],
+  marquee: ["Les nominations sont ouvertes", "Les Raimondis", "4e édition", "Vote pour tout le monde", "Aucun divulgâcheur"],
+  deadlineLabel: "Date limite",
+  privacy: "Seul l'organisateur voit ce que tu soumets.",
   whoTitle: "Qui es-tu?",
   whoHint: "Choisis ton nom. Ta propre carte sera masquée\u00a0: pas d'autonomination.",
   searchNames: "Recherche ton nom",
@@ -165,8 +170,9 @@ const fr: typeof en = {
   clearSearch: "Effacer la recherche",
   nominate: (name) => `Mettre ${name} en nomination`,
   awardsGiven: (n) => `${n} prix`,
+  nominateShort: "Voter",
 
-  dialogTitle: (name) => `Un prix pour ${name}`,
+  dialogEyebrow: "Un prix pour",
   awardName: "Nom du prix",
   awardExamples: [
     "Le prix Boîte de réception zéro",

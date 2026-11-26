@@ -12,9 +12,9 @@ export function AdminLogin() {
   const [state, action, pending] = useActionState(adminLogin, null);
 
   return (
-    <form action={action} className="card mx-auto max-w-md p-6 sm:p-8">
-      <h2 className="text-xl font-semibold">{t.admin}</h2>
-      <label htmlFor="password" className="mt-5 mb-2 block text-sm text-muted">
+    <form action={action} className="mx-auto mt-14 w-[calc(100%-2.5rem)] max-w-md border border-line border-t-purple bg-surface p-6 [border-top-width:2px] sm:p-9">
+      <h1 className="font-serif text-4xl leading-none">{t.admin}</h1>
+      <label htmlFor="password" className="eyebrow mt-7 mb-2 block">
         {t.adminPassword}
       </label>
       <input id="password" name="password" type="password" required autoFocus autoComplete="current-password" className="input" />
@@ -23,7 +23,7 @@ export function AdminLogin() {
           {t.badAdminPassword}
         </p>
       )}
-      <button type="submit" disabled={pending} className="btn btn-primary mt-5 w-full">
+      <button type="submit" disabled={pending} className="btn btn-primary mt-6 w-full">
         {t.signIn}
       </button>
     </form>
@@ -69,11 +69,12 @@ export function AdminTable({ nominations, codeHolders }: TableProps) {
   });
 
   return (
-    <>
-      <div className="flex flex-wrap items-end justify-between gap-4">
+    <div className="wrap pt-10 sm:pt-14">
+      <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
-          <h2 className="font-serif text-3xl font-semibold">{t.results}</h2>
-          <p className="mt-1 text-muted">{t.stats(nominations.length, totals.size, voters.length)}</p>
+          <p className="eyebrow text-purple-pale">{t.admin}</p>
+          <h1 className="mt-3 font-serif text-6xl leading-[0.9] tracking-[-0.02em] sm:text-7xl">{t.results}</h1>
+          <p className="mt-4 text-muted">{t.stats(nominations.length, totals.size, voters.length)}</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <a href="/admin/export" download className="btn btn-primary">
@@ -90,10 +91,10 @@ export function AdminTable({ nominations, codeHolders }: TableProps) {
         </div>
       </div>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-3">
-        <label className="text-sm text-muted">
+      <div className="mt-10 grid gap-4 border-t border-line pt-6 sm:grid-cols-3">
+        <label className="eyebrow">
           {t.nominee}
-          <select value={nominee} onChange={(e) => setNominee(e.target.value)} className="input mt-1">
+          <select value={nominee} onChange={(e) => setNominee(e.target.value)} className="input mt-2 text-base font-normal tracking-normal normal-case">
             <option value="">{t.all}</option>
             {COLLEAGUES.map((c) => (
               <option key={c.id} value={c.id}>
@@ -102,9 +103,9 @@ export function AdminTable({ nominations, codeHolders }: TableProps) {
             ))}
           </select>
         </label>
-        <label className="text-sm text-muted">
+        <label className="eyebrow">
           {t.voter}
-          <select value={voter} onChange={(e) => setVoter(e.target.value)} className="input mt-1">
+          <select value={voter} onChange={(e) => setVoter(e.target.value)} className="input mt-2 text-base font-normal tracking-normal normal-case">
             <option value="">{t.all}</option>
             {voters.map((v) => (
               <option key={v} value={v}>
@@ -113,9 +114,9 @@ export function AdminTable({ nominations, codeHolders }: TableProps) {
             ))}
           </select>
         </label>
-        <label className="text-sm text-muted">
+        <label className="eyebrow">
           {t.searchText}
-          <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} className="input mt-1" />
+          <input type="search" value={query} onChange={(e) => setQuery(e.target.value)} className="input mt-2 text-base font-normal tracking-normal normal-case" />
         </label>
       </div>
 
@@ -126,7 +127,7 @@ export function AdminTable({ nominations, codeHolders }: TableProps) {
             <button
               type="button"
               onClick={() => (setNominee(""), setVoter(""), setQuery(""))}
-              className="cursor-pointer rounded text-purple-light underline underline-offset-4"
+              className="link"
             >
               {t.clearFilters}
             </button>
@@ -136,14 +137,14 @@ export function AdminTable({ nominations, codeHolders }: TableProps) {
 
       {groups.map(({ colleague, items }) => (
         <section key={colleague.id} className="card mt-6 overflow-hidden">
-          <h3 className="flex items-center gap-3 border-b border-line bg-surface-2 px-4 py-3 font-semibold">
+          <h3 className="flex items-center gap-3 border-b border-line bg-surface-2 px-4 py-3 text-lg font-semibold">
             <Avatar name={colleague.name} size="sm" />
             {colleague.name}
-            <span className="ml-auto rounded-full bg-gold px-2.5 py-0.5 text-xs font-bold text-[#1a1200]">{items.length}</span>
+            <span className="foil ml-auto min-w-7 px-2 py-0.5 text-center text-xs font-bold tabular-nums">{items.length}</span>
           </h3>
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] text-left text-sm">
-              <thead className="text-xs tracking-wider text-muted uppercase">
+              <thead className="eyebrow">
                 <tr>
                   <th scope="col" className="w-[26%] px-4 py-2 font-medium">{t.colAward}</th>
                   <th scope="col" className="px-4 py-2 font-medium">{t.colReason}</th>
@@ -154,7 +155,7 @@ export function AdminTable({ nominations, codeHolders }: TableProps) {
               <tbody>
                 {items.map((n) => (
                   <tr key={n.id} className="border-t border-line align-top">
-                    <td className="px-4 py-3 font-semibold text-gold">{n.awardName}</td>
+                    <td className="px-4 py-3 font-serif text-lg leading-snug text-gold italic">{n.awardName}</td>
                     <td className="px-4 py-3 break-words whitespace-pre-wrap">{n.reason}</td>
                     <td className="px-4 py-3">{n.voterName}</td>
                     <td className="px-4 py-3 text-muted">
@@ -172,13 +173,13 @@ export function AdminTable({ nominations, codeHolders }: TableProps) {
 
       {!filtering && notNominated.length > 0 && nominations.length > 0 && (
         <section className="mt-10">
-          <h3 className="text-sm font-semibold text-muted">{t.notNominated(notNominated.length)}</h3>
-          <p className="mt-2 text-sm">{notNominated.map((c) => c.name).join(" · ")}</p>
+          <h3 className="eyebrow">{t.notNominated(notNominated.length)}</h3>
+          <p className="mt-3 text-white/85">{notNominated.map((c) => c.name).join(" · ")}</p>
         </section>
       )}
 
       <ResetCode holders={COLLEAGUES.filter((c) => codeHolders.includes(c.id))} />
-    </>
+    </div>
   );
 }
 
@@ -199,8 +200,8 @@ function ResetCode({ holders }: { holders: { id: string; name: string }[] }) {
   }
 
   return (
-    <section className="card mt-10 p-4 sm:p-5">
-      <h3 className="font-semibold">{t.codes(holders.length, COLLEAGUES.length)}</h3>
+    <section className="card mt-12 p-5 sm:p-6">
+      <h3 className="text-lg font-semibold">{t.codes(holders.length, COLLEAGUES.length)}</h3>
       <p className="mt-1 text-sm text-muted">{t.resetCodeHint}</p>
       <div className="mt-3 flex flex-col gap-2 sm:flex-row">
         <select value={selected} onChange={(e) => setSelected(e.target.value)} aria-label={t.resetCode} className="input sm:max-w-xs">

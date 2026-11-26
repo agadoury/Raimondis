@@ -5,7 +5,7 @@ import { formatDeadline, type ErrorCode } from "@/lib/i18n";
 import { COLLEAGUES, matches, type Colleague } from "@/lib/shared";
 import { signIn } from "./actions";
 import { useLang } from "./lang";
-import { Avatar, Chevron } from "./ui";
+import { Avatar, Chevron, Marquee } from "./ui";
 
 /** Landing page: what this is, "Who are you?", then a 4-digit code so we can remember you. */
 export default function PickVoter() {
@@ -16,6 +16,7 @@ export default function PickVoter() {
   const [error, setError] = useState<ErrorCode | null>(null);
   const [pending, startTransition] = useTransition();
   const list = COLLEAGUES.filter((c) => matches(c.name, query));
+  const deadline = formatDeadline(lang);
 
   function submit() {
     if (!picked) return;
@@ -28,113 +29,150 @@ export default function PickVoter() {
   }
 
   return (
-    <section className="mx-auto max-w-2xl">
-      <ol className="card space-y-3 p-5 sm:p-6">
-        {t.how.map((line, i) => (
-          <li key={i} className="flex gap-3">
-            <span aria-hidden="true" className="mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full bg-purple text-xs font-bold">
-              {i + 1}
+    <>
+      {/* Hero */}
+      <section className="hero relative overflow-hidden border-b border-line">
+        <div className="wrap relative pt-12 pb-12 sm:pt-20 sm:pb-20">
+          <Chevron className="hero-chevron absolute top-4 -right-[10vw] size-[58vw] text-purple sm:top-1/2 sm:right-4 sm:size-[26rem] sm:-translate-y-1/2 lg:size-[31rem]" />
+          <p className="eyebrow fade-up relative text-purple-pale">{t.edition}</p>
+          <h1 className="hero-title relative mt-5 font-serif text-[clamp(3.7rem,17.5vw,11.5rem)] leading-[0.86] tracking-[-0.025em]">
+            <span className="-mb-[0.14em] block overflow-hidden pb-[0.14em]">
+              <span className="rise block italic">Les</span>
             </span>
-            <span>{line}</span>
-          </li>
-        ))}
-        <li className="flex gap-3 border-t border-line pt-3 text-sm text-gold">
-          <Chevron className="mt-1 size-3.5 shrink-0" />
-          <span>{t.howDeadline(formatDeadline(lang))}</span>
-        </li>
-      </ol>
+            <span className="-mb-[0.14em] block overflow-hidden pb-[0.14em]">
+              <span className="rise block [animation-delay:90ms]">Raimondis</span>
+            </span>
+          </h1>
+          <p className="fade-up relative mt-8 text-lg text-white/85 [animation-delay:350ms] sm:text-xl">
+            {t.tagline.map((phrase) => (
+              <span key={phrase} className="mr-[0.35em] inline-block">
+                {phrase}
+              </span>
+            ))}
+          </p>
+        </div>
+        <Marquee items={[...t.marquee, `${t.deadlineLabel} ${deadline}`]} />
+      </section>
 
-      {!picked ? (
-        <>
-          <h2 className="mt-8 font-serif text-3xl font-semibold">{t.whoTitle}</h2>
-          <p className="mt-2 text-muted">{t.whoHint}</p>
+      {/* How it works */}
+      <section className="border-b border-line">
+        <ol className="wrap grid sm:grid-cols-3 sm:gap-x-10">
+          {t.how.map((line, i) => (
+            <li key={i} className="border-b border-line py-7 last:border-b-0 sm:border-b-0 sm:py-12">
+              <span aria-hidden="true" className="font-serif text-5xl leading-none text-purple-light italic">
+                0{i + 1}
+              </span>
+              <p className="mt-4 text-[1.0625rem] leading-relaxed text-white/90">{line}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+      <section className="border-b border-line bg-surface">
+        <div className="wrap flex flex-col justify-between gap-1 py-4 sm:flex-row sm:items-center">
+          <p className="eyebrow">
+            <span className="foil-text">
+              {t.deadlineLabel} — {deadline}
+            </span>
+          </p>
+          <p className="eyebrow">{t.privacy}</p>
+        </div>
+      </section>
 
-          {/* Enter picks the first match */}
+      {/* Who are you? → 4-digit code */}
+      <section className="wrap pt-12 sm:pt-16">
+        {!picked ? (
+          <>
+            <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <h2 className="font-serif text-5xl leading-none sm:text-6xl">{t.whoTitle}</h2>
+                <p className="mt-4 text-muted">{t.whoHint}</p>
+              </div>
+              {/* Enter picks the first match */}
+              <form
+                className="w-full sm:w-80"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (list[0]) setPicked(list[0]);
+                }}
+              >
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder={t.searchNames}
+                  aria-label={t.searchNames}
+                  className="input"
+                />
+              </form>
+            </div>
+
+            <ul className="mt-8 grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-3">
+              {list.map((c) => (
+                <li key={c.id} className="border-r border-b border-line">
+                  <button
+                    type="button"
+                    onClick={() => setPicked(c)}
+                    className="group flex w-full cursor-pointer items-center justify-between gap-3 px-4 py-4 text-left text-lg transition-colors hover:bg-purple focus-visible:-outline-offset-2"
+                  >
+                    {c.name}
+                    <Chevron className="nudge size-3 shrink-0 text-purple transition-colors group-hover:text-white" />
+                  </button>
+                </li>
+              ))}
+            </ul>
+            {list.length === 0 && <p className="mt-6 text-muted">{t.noMatch(query)}</p>}
+          </>
+        ) : (
           <form
-            className="mt-5"
+            noValidate
+            className="mx-auto max-w-xl border border-line border-t-purple bg-surface p-6 [border-top-width:2px] sm:p-9"
             onSubmit={(e) => {
               e.preventDefault();
-              if (list[0]) setPicked(list[0]);
+              submit();
             }}
           >
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder={t.searchNames}
-              aria-label={t.searchNames}
-              className="input"
-            />
-          </form>
-
-          <ul className="mt-4 grid gap-2 sm:grid-cols-2">
-            {list.map((c) => (
-              <li key={c.id}>
-                <button
-                  type="button"
-                  onClick={() => setPicked(c)}
-                  className="card flex w-full cursor-pointer items-center gap-3 p-2.5 pr-4 text-left transition-colors hover:border-purple-light hover:bg-surface-2"
-                >
-                  <Avatar name={c.name} />
-                  <span className="font-medium">{c.name}</span>
+            <div className="flex items-center gap-4">
+              <Avatar name={picked.name} size="lg" />
+              <div>
+                <p className="text-lg font-semibold">{picked.name}</p>
+                <button type="button" onClick={() => (setPicked(null), setCode(""), setError(null))} className="link text-sm">
+                  {t.change}
                 </button>
-              </li>
-            ))}
-          </ul>
-          {list.length === 0 && <p className="mt-6 text-muted">{t.noMatch(query)}</p>}
-        </>
-      ) : (
-        <form
-          noValidate
-          className="card mt-8 p-5 sm:p-6"
-          onSubmit={(e) => {
-            e.preventDefault();
-            submit();
-          }}
-        >
-          <div className="flex items-center gap-3">
-            <Avatar name={picked.name} size="lg" />
+              </div>
+            </div>
+
+            <h2 className="mt-7 font-serif text-3xl leading-tight sm:text-4xl">{t.codeTitle(picked.name)}</h2>
+            <p id="code-hint" className="mt-3 text-muted">
+              {t.codeHint}
+            </p>
+            <input
+              autoFocus
+              value={code}
+              onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 4))}
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={4}
+              autoComplete="off"
+              placeholder="0000"
+              aria-label={t.codeLabel}
+              aria-describedby="code-hint"
+              aria-invalid={!!error}
+              className="input mt-6 max-w-52 pl-[calc(1rem+0.5em)] text-center font-serif text-4xl tracking-[0.5em] placeholder:text-white/15"
+            />
+            {error && (
+              <p role="alert" className="mt-3 text-sm text-red-300">
+                {t.errors[error]}
+              </p>
+            )}
             <div>
-              <p className="font-semibold">{picked.name}</p>
-              <button
-                type="button"
-                onClick={() => (setPicked(null), setCode(""), setError(null))}
-                className="cursor-pointer rounded text-sm text-purple-light underline underline-offset-4 hover:text-purple-pale"
-              >
-                {t.change}
+              <button type="submit" disabled={pending} className="btn btn-primary mt-7 w-full sm:w-auto">
+                {t.start}
+                <Chevron className="nudge size-3" />
               </button>
             </div>
-          </div>
-
-          <h2 className="mt-5 font-serif text-2xl font-semibold lining-nums">{t.codeTitle(picked.name)}</h2>
-          <p id="code-hint" className="mt-2 text-sm text-muted">
-            {t.codeHint}
-          </p>
-          <input
-            autoFocus
-            value={code}
-            onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 4))}
-            inputMode="numeric"
-            pattern="[0-9]*"
-            maxLength={4}
-            autoComplete="off"
-            placeholder="••••"
-            aria-label={t.codeLabel}
-            aria-describedby="code-hint"
-            aria-invalid={!!error}
-            className="input mt-4 max-w-44 text-center text-2xl tracking-[0.5em]"
-          />
-          {error && (
-            <p role="alert" className="mt-3 text-sm text-red-300">
-              {t.errors[error]}
-            </p>
-          )}
-          <button type="submit" disabled={pending} className="btn btn-primary mt-5 w-full sm:w-auto">
-            {t.start}
-            <Chevron className="size-3" />
-          </button>
-        </form>
-      )}
-    </section>
+          </form>
+        )}
+      </section>
+    </>
   );
 }
