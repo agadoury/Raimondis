@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+/* Brand palette: black + core purple, with a touch of award gold. */
+@theme {
+  --color-ink: #0a0a0c;
+  --color-surface: #141219;
+  --color-surface-2: #1d1a24;
+  --color-line: #2e2a38;
+  --color-muted: #b9b4c6;
+  --color-purple: #a100ff;
+  --color-purple-dark: #7500c0;
+  --color-purple-deep: #460073;
+  --color-purple-light: #be82ff;
+  --color-purple-pale: #dcafff;
+  --color-gold: #e9c46a;
+}
+
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--color-ink);
+  background-image: radial-gradient(70rem 32rem at 50% -12rem, rgb(161 0 255 / 0.22), transparent 70%);
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-purple-pale);
+  outline-offset: 2px;
+}
+
+@layer components {
+  .input {
+    @apply w-full rounded-xl border border-line bg-surface-2 px-4 py-3 text-base text-white placeholder:text-muted/70 transition-colors hover:border-purple-light/60 focus:border-purple-light focus:outline-none focus-visible:outline-2 focus-visible:outline-purple-pale;
+  }
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition-colors disabled:cursor-not-allowed disabled:opacity-60;
+  }
+  .btn-primary {
+    @apply bg-purple text-white hover:bg-purple-dark;
+  }
+  .btn-ghost {
+    @apply border border-line text-white hover:border-purple-light hover:bg-surface-2;
+  }
+  .card {
+    @apply rounded-2xl border border-line bg-surface;
+  }
+}
+
+/* Native <dialog> */
+dialog::backdrop {
+  background: rgb(0 0 0 / 0.72);
+  backdrop-filter: blur(4px);
+}
+
+/* Celebration */
+@media (prefers-reduced-motion: no-preference) {
+  .confetti-piece {
+    animation: confetti var(--d, 1.1s) cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+  }
+  .pop {
+    animation: pop 0.35s cubic-bezier(0.2, 0.9, 0.3, 1.3) both;
+  }
+  dialog[open] {
+    animation: pop 0.2s ease-out both;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .confetti {
+    display: none;
+  }
+}
+
+@keyframes confetti {
+  0% {
+    transform: translate(0, 0) rotate(0);
+    opacity: 1;
+  }
+  45% {
+    transform: translate(calc(var(--x) * 0.8), var(--y)) rotate(calc(var(--r) * 0.5));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--x), calc(var(--y) + 340px)) rotate(var(--r));
+    opacity: 0;
+  }
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.92) translateY(6px);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
