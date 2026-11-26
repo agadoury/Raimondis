@@ -114,7 +114,7 @@ body::after {
 /* Hero: a purple stage light behind the giant chevron. */
 .hero {
   background:
-    radial-gradient(34rem 24rem at 86% 45%, rgb(161 0 255 / 0.3), transparent 68%);
+    radial-gradient(30rem 18rem at 88% 50%, rgb(161 0 255 / 0.3), transparent 68%);
 }
 .hero-chevron {
   filter: drop-shadow(0 0 4.5rem rgb(161 0 255 / 0.6));

@@ -93,9 +93,18 @@ export async function adminLogout() {
   await auth.setAdmin(false);
 }
 
-/** Lets someone who forgot their code (or whose name was taken) choose a new one. */
-export async function adminResetCode(voterId: string): Promise<{ ok: boolean }> {
+/**
+ * For someone who forgot their code or whose name was taken: give them a new
+ * 4-digit code, or pass null to clear it so they can choose their own.
+ */
+export async function adminSetCode(voterId: string, code: string | null): Promise<{ ok: boolean }> {
   if (!(await auth.isAdmin()) || !findColleague(voterId)) return { ok: false };
-  await store.resetCode(voterId);
-  return { ok: true };
+  if (code !== null && !/^\d{4}$/.test(String(code))) return { ok: false };
+  try {
+    await store.setCode(voterId, code === null ? null : auth.hashCode(voterId, code));
+    return { ok: true };
+  } catch (e) {
+    console.error(e);
+    return { ok: false };
+  }
 }

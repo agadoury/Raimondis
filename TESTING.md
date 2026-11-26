@@ -4,7 +4,7 @@ Run through this once on the live site before sharing the link. It takes about t
 
 ## 1. Voter flow
 
-- [ ] The site opens straight on the landing page: three short explanations, the deadline (Friday, December 4), then "Who are you?" with 32 names in alphabetical order by first name. No password is asked.
+- [ ] The site opens straight on the landing page: the title, the deadline (Friday, December 4), then "Step 1 of 2 — Who are you?" with 32 names in alphabetical order by first name. No password is asked.
 - [ ] Typing `eloise` shows both Éloïse Turgeon and Eloïse Provost-Carrière; `francois` shows François-Xavier Groulx.
 - [ ] Picking a name asks for a 4-digit code. Fewer than 4 digits shows an error; letters can't be typed.
 - [ ] After choosing a code, the grid shows 31 cards and yours is missing. The progress line reads "You've nominated 0 of 31 colleagues".
@@ -23,7 +23,8 @@ Run through this once on the live site before sharing the link. It takes about t
 - [ ] On a second device (or a private window), pick the same name and type the same code: your nominations, gold checks and progress are all there.
 - [ ] Pick the same name with a wrong code: you get an error and are not let in.
 - [ ] "Not you?" returns to the landing page.
-- [ ] In `/admin`, **Reset code** for your name. You can then sign in with a new code, and your nominations are still there.
+- [ ] In the admin page under **Login codes**, set a new code for your name. The old code is refused, the new one works, and your nominations are still there.
+- [ ] **Clear code** for your name. You can then sign in with any new code, and your nominations are still there.
 
 ## 3. No spoilers
 
@@ -36,7 +37,7 @@ Run through this once on the live site before sharing the link. It takes about t
 
 ## 4. Admin and export
 
-- [ ] `/admin` rejects a wrong password and accepts `admin123`.
+- [ ] The **Admin** link in the footer opens the admin page. It rejects a wrong password and accepts `admin123`.
 - [ ] The table is grouped by nominee, with a count on each group, and shows the voter's name on every row.
 - [ ] The **Nominee** and **Voter** filters narrow the table. Searching `zebra` (lower case) finds `ZEBRA TEST`.
 - [ ] Submit a nomination whose text has accents and punctuation, for example award `Le prix « Élève modèle »` with reason `Parce qu'elle a dit "oui", même à 8 h`, for **Éloïse Turgeon**.

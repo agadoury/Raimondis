@@ -25,12 +25,8 @@ const en = {
   deadline: (date: string) => `Nominations close ${date}`,
   switchLang: "Passer en français",
 
-  // Landing: explanations + "Who are you?" + 4-digit code
-  how: [
-    "Recommend colleagues for award categories: invent the category (say, “The Corporate Acronym Expert”) and tell us why.",
-    "Your recommendations influence who wins what at the Raimondis awards.",
-    "Vote for as many colleagues as possible. You can vote for the same person more than once.",
-  ],
+  // Landing: tagline + "Who are you?" + 4-digit code
+  tagline: "Your colleagues. Your categories. One big night.",
   step: (n: number) => `Step ${n} of 2`,
   startHere: "Start here",
   deadlineLabel: "Deadline",
@@ -131,9 +127,15 @@ const en = {
   notNominated: (n: number) => `Not nominated yet (${n})`,
   clearFilters: "Clear filters",
   codes: (n: number, total: number) => `${n} of ${total} people have created their code`,
-  resetCodeHint: "Someone forgot their code? Reset it and they can choose a new one. Their nominations are kept.",
-  resetCode: "Reset code",
-  resetDone: (name: string) => `Code reset for ${name}.`,
+  codesTitle: "Login codes",
+  codesHint: "Someone forgot their code? Give them a new one, or clear it so they can choose their own. Their nominations are kept.",
+  person: "Person",
+  hasCode: "has a code",
+  newCode: "New 4-digit code",
+  setCode: "Set code",
+  clearCode: "Clear code",
+  codeSaved: (name: string, code: string) => `${name} can now sign in with ${code}.`,
+  codeCleared: (name: string) => `Code cleared for ${name}. They can choose a new one.`,
   csvHeaders: ["Nominee", "Award name", "Reason", "Voter", "Timestamp"],
 };
 
@@ -143,11 +145,7 @@ const fr: typeof en = {
   deadline: (date) => `Mises en nomination jusqu'au ${date}`,
   switchLang: "Switch to English",
 
-  how: [
-    "Recommande tes collègues pour des catégories de prix\u00a0: invente la catégorie (par exemple «\u00a0L'as des acronymes corporatifs\u00a0») et dis-nous pourquoi.",
-    "Tes recommandations influenceront qui gagne quoi aux prix Raimondis.",
-    "Vote pour le plus de collègues possible. Tu peux voter plus d'une fois pour la même personne.",
-  ],
+  tagline: "Tes collègues. Tes catégories. Une grande soirée.",
   step: (n) => `Étape ${n} de 2`,
   startHere: "Commence ici",
   deadlineLabel: "Date limite",
@@ -242,9 +240,15 @@ const fr: typeof en = {
   notNominated: (n) => `Pas encore en nomination (${n})`,
   clearFilters: "Effacer les filtres",
   codes: (n, total) => `${n} personnes sur ${total} ont créé leur code`,
-  resetCodeHint: "Quelqu'un a oublié son code? Réinitialise-le et la personne pourra en choisir un nouveau. Ses nominations sont conservées.",
-  resetCode: "Réinitialiser le code",
-  resetDone: (name) => `Code réinitialisé pour ${name}.`,
+  codesTitle: "Codes de connexion",
+  codesHint: "Quelqu'un a oublié son code? Donne-lui-en un nouveau, ou efface-le pour que la personne en choisisse un. Ses nominations sont conservées.",
+  person: "Personne",
+  hasCode: "a un code",
+  newCode: "Nouveau code à 4 chiffres",
+  setCode: "Définir le code",
+  clearCode: "Effacer le code",
+  codeSaved: (name, code) => `${name} peut maintenant se connecter avec le ${code}.`,
+  codeCleared: (name) => `Code effacé pour ${name}. La personne pourra en choisir un nouveau.`,
   csvHeaders: ["Personne en nomination", "Nom du prix", "Raison", "Votant", "Horodatage"],
 };
 

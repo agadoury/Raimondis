@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Bodoni_Moda, Hanken_Grotesk } from "next/font/google";
 import { cookies } from "next/headers";
 import { DEFAULT_LANG, dict, LANG_COOKIE, type Lang } from "@/lib/i18n";
-import Header from "./Header";
+import Header, { Footer } from "./Header";
 import { LangProvider } from "./lang";
 import "./globals.css";
 
@@ -31,7 +31,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="min-h-dvh font-sans antialiased">
         <LangProvider initial={lang}>
           <Header />
-          <main className="pb-28">{children}</main>
+          <main className="min-h-[calc(100dvh-7.5rem-2px)] pb-24">{children}</main>
+          <Footer />
         </LangProvider>
       </body>
     </html>

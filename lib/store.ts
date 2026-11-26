@@ -17,6 +17,7 @@ type Client = {
   hdel(key: string, field: string): Promise<unknown>;
   incr(key: string): Promise<number>;
   expire(key: string, seconds: number): Promise<unknown>;
+  del(key: string): Promise<unknown>;
 };
 
 /** In-memory stand-in so `npm run dev` works without Redis. Never used on Vercel. */
@@ -33,6 +34,7 @@ function memoryClient(): Client {
     async hdel(k, f) { delete h(k)[f]; },
     async incr(k) { const v = h("__counters"); v[k] = ((v[k] as number) ?? 0) + 1; return v[k] as number; },
     async expire() {},
+    async del(k) { delete h("__counters")[k]; },
   };
 }
 
@@ -60,8 +62,12 @@ export async function saveOrCheckCode(voterId: string, hashedCode: string) {
   return String(await r.hget(CODES, voterId)) === hashedCode;
 }
 
-/** ADMIN ONLY. The person can then choose a new code. */
-export const resetCode = (voterId: string) => redis().hdel(CODES, voterId);
+/** ADMIN ONLY. Replaces the person's code (pass null to clear it, so they can choose a new one). */
+export async function setCode(voterId: string, hashedCode: string | null) {
+  const r = redis();
+  await (hashedCode ? r.hset(CODES, { [voterId]: hashedCode }) : r.hdel(CODES, voterId));
+  await r.del(counterKey("signin", voterId)); // lift any "too many attempts" lock
+}
 
 /** ADMIN ONLY. Ids of everyone who has created a code. */
 export const listCodeHolders = () => redis().hkeys(CODES);

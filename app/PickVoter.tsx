@@ -30,26 +30,18 @@ export default function PickVoter() {
 
   return (
     <>
-      {/* Hero: title, three lines of explanation, deadline. On phones the explanation
-          is hidden so "Who are you?" comes straight after the title. */}
+      {/* Hero: title, tagline (desktop only) and deadline. Kept short so "Who are you?" follows at once. */}
       <section className="hero relative overflow-hidden border-b border-line">
-        <div className="wrap relative py-8 sm:py-11">
-          <Chevron className="hero-chevron absolute top-3 -right-[9vw] size-[30vw] text-purple sm:top-1/2 sm:right-8 sm:size-64 sm:-translate-y-1/2 lg:size-80" />
+        <div className="wrap relative py-8 sm:py-9">
+          <Chevron className="hero-chevron absolute top-3 -right-[9vw] size-[30vw] text-purple sm:top-1/2 sm:right-8 sm:size-48 sm:-translate-y-1/2 lg:size-56" />
           <p className="eyebrow relative text-purple-pale">{t.edition}</p>
-          <h1 className="hero-title relative mt-3 -mb-[0.14em] overflow-hidden pb-[0.14em] font-serif text-[clamp(3rem,13.5vw,6.75rem)] leading-[0.95] tracking-[-0.025em] whitespace-nowrap">
+          <h1 className="hero-title relative mt-3 -mb-[0.14em] overflow-hidden pb-[0.14em] font-serif text-[clamp(3rem,13.5vw,6rem)] leading-[0.95] tracking-[-0.025em] whitespace-nowrap">
             <span className="rise block">
               <i>Les</i> Raimondis
             </span>
           </h1>
-          <ul className="relative mt-6 hidden max-w-2xl space-y-2 text-[1.0625rem] leading-snug text-white/90 sm:block">
-            {t.how.map((line) => (
-              <li key={line} className="flex gap-3">
-                <Chevron className="mt-[0.4em] size-2.5 shrink-0 text-purple-light" />
-                {line}
-              </li>
-            ))}
-          </ul>
-          <p className="eyebrow relative mt-4 flex gap-x-6 sm:mt-6">
+          <p className="relative mt-4 hidden text-xl text-white/85 sm:block">{t.tagline}</p>
+          <p className="eyebrow relative mt-4 flex gap-x-6 sm:mt-5">
             <span className="foil-text">
               {t.deadlineLabel} — {deadline}
             </span>
@@ -59,33 +51,38 @@ export default function PickVoter() {
       </section>
 
       {/* Step 1: who are you? → Step 2: 4-digit code */}
-      <section className="wrap pt-8 sm:pt-11">
+      <section className="wrap pt-8 sm:pt-10">
         {!picked ? (
           <>
-            <p className="eyebrow text-purple-pale">
-              {t.step(1)} — {t.startHere}
-            </p>
-            <h2 className="mt-2 font-serif text-5xl leading-none sm:text-6xl">{t.whoTitle}</h2>
-            <p className="mt-3 text-muted">{t.whoHint}</p>
-            {/* Enter picks the first match */}
-            <form
-              className="mt-5 max-w-md"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (list[0]) setPicked(list[0]);
-              }}
-            >
-              <input
-                type="search"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder={t.searchNames}
-                aria-label={t.searchNames}
-                className="input border-purple-light/70 py-4 text-lg"
-              />
-            </form>
+            {/* Heading on the left; on desktop the search sits top right of the name cards. */}
+            <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <p className="eyebrow text-purple-pale">
+                  {t.step(1)} — {t.startHere}
+                </p>
+                <h2 className="mt-2 font-serif text-5xl leading-none sm:text-6xl">{t.whoTitle}</h2>
+                <p className="mt-3 text-muted">{t.whoHint}</p>
+              </div>
+              {/* Enter picks the first match */}
+              <form
+                className="w-full sm:w-80"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (list[0]) setPicked(list[0]);
+                }}
+              >
+                <input
+                  type="search"
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                  placeholder={t.searchNames}
+                  aria-label={t.searchNames}
+                  className="input border-purple-light/70"
+                />
+              </form>
+            </div>
 
-            <ul className="mt-6 grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-5 grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-3">
               {list.map((c) => (
                 <li key={c.id} className="border-r border-b border-line">
                   <button

@@ -34,3 +34,19 @@ export default function Header() {
     </header>
   );
 }
+
+/** Footer: the way in to the admin side. */
+export function Footer() {
+  const { t } = useLang();
+  return (
+    <footer className="border-t border-line">
+      <div className="wrap flex h-16 items-center justify-between gap-4">
+        <span className="eyebrow">Les Raimondis — {t.edition}</span>
+        <Link href="/admin" className="eyebrow flex items-center gap-2 py-3 transition-colors hover:text-white">
+          {t.admin}
+          <Chevron className="nudge size-2.5 text-purple" />
+        </Link>
+      </div>
+    </footer>
+  );
+}

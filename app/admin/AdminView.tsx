@@ -3,7 +3,7 @@
 import { useActionState, useState } from "react";
 import { useRouter } from "next/navigation";
 import { COLLEAGUES, findColleague, matches, type Nomination } from "@/lib/shared";
-import { adminLogin, adminLogout, adminResetCode } from "../actions";
+import { adminLogin, adminLogout, adminSetCode } from "../actions";
 import { useLang } from "../lang";
 import { Avatar } from "../ui";
 
@@ -178,46 +178,82 @@ export function AdminTable({ nominations, codeHolders }: TableProps) {
         </section>
       )}
 
-      <ResetCode holders={COLLEAGUES.filter((c) => codeHolders.includes(c.id))} />
+      <Codes holders={codeHolders} />
     </div>
   );
 }
 
-function ResetCode({ holders }: { holders: { id: string; name: string }[] }) {
+/** Give someone a new 4-digit code, or clear it so they can choose their own. */
+function Codes({ holders }: { holders: string[] }) {
   const { t } = useLang();
   const router = useRouter();
   const [selected, setSelected] = useState("");
-  const [done, setDone] = useState("");
+  const [code, setCode] = useState("");
+  const [message, setMessage] = useState("");
+  const person = COLLEAGUES.find((c) => c.id === selected);
 
-  async function reset() {
-    const person = holders.find((c) => c.id === selected);
+  async function save(newCode: string | null) {
     if (!person) return;
-    const { ok } = await adminResetCode(person.id);
+    const { ok } = await adminSetCode(person.id, newCode);
+    setMessage(!ok ? t.errors.generic : newCode ? t.codeSaved(person.name, newCode) : t.codeCleared(person.name));
     if (!ok) return;
-    setDone(t.resetDone(person.name));
     setSelected("");
+    setCode("");
     router.refresh();
   }
 
   return (
-    <section className="card mt-12 p-5 sm:p-6">
-      <h3 className="text-lg font-semibold">{t.codes(holders.length, COLLEAGUES.length)}</h3>
-      <p className="mt-1 text-sm text-muted">{t.resetCodeHint}</p>
-      <div className="mt-3 flex flex-col gap-2 sm:flex-row">
-        <select value={selected} onChange={(e) => setSelected(e.target.value)} aria-label={t.resetCode} className="input sm:max-w-xs">
-          <option value="">—</option>
-          {holders.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
-        <button type="button" onClick={reset} disabled={!selected} className="btn btn-ghost">
-          {t.resetCode}
+    <section className="card mt-12 p-5 sm:p-6" aria-labelledby="codes-title">
+      <h3 id="codes-title" className="font-serif text-3xl leading-none">
+        {t.codesTitle}
+      </h3>
+      <p className="mt-3 text-muted">
+        {t.codes(holders.length, COLLEAGUES.length)}. {t.codesHint}
+      </p>
+      <form
+        className="mt-5 grid gap-4 sm:grid-cols-[minmax(0,1fr)_12rem_auto_auto] sm:items-end"
+        onSubmit={(e) => {
+          e.preventDefault();
+          if (/^\d{4}$/.test(code)) save(code);
+        }}
+      >
+        <label className="eyebrow">
+          {t.person}
+          <select
+            value={selected}
+            onChange={(e) => setSelected(e.target.value)}
+            className="input mt-2 text-base font-normal tracking-normal normal-case"
+          >
+            <option value="">—</option>
+            {COLLEAGUES.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+                {holders.includes(c.id) ? ` (${t.hasCode})` : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label className="eyebrow">
+          {t.newCode}
+          <input
+            value={code}
+            onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 4))}
+            inputMode="numeric"
+            maxLength={4}
+            autoComplete="off"
+            placeholder="0000"
+            className="input mt-2 text-base font-normal tracking-[0.3em] placeholder:text-white/20"
+          />
+        </label>
+        <button type="submit" disabled={!person || code.length !== 4} className="btn btn-primary">
+          {t.setCode}
         </button>
-      </div>
-      <p role="status" className="mt-2 text-sm text-gold">
-        {done}
+        <button type="button" onClick={() => save(null)} disabled={!person || !holders.includes(selected)} className="btn btn-ghost">
+          {t.clearCode}
+        </button>
+      </form>
+      <p role="status" className="mt-3 text-sm text-gold">
+        {message}
       </p>
     </section>
   );
