@@ -27,12 +27,12 @@ const en = {
 
   // Landing: explanations + "Who are you?" + 4-digit code
   how: [
-    "Recommend colleagues for award categories: invent the category (say, “The Inbox Zero Award”) and tell us why.",
+    "Recommend colleagues for award categories: invent the category (say, “The Corporate Acronym Expert”) and tell us why.",
     "Your recommendations influence who wins what at the Raimondis awards.",
     "Vote for as many colleagues as possible. You can vote for the same person more than once.",
   ],
   tagline: ["Your colleagues.", "Your categories.", "One big night."],
-  marquee: ["Nominations are open", "Les Raimondis", "4th Edition", "Vote for everyone", "No spoilers"],
+  marquee: ["Nominations are open", "Les Raimondis", "4th Edition", "Vote for everyone"],
   deadlineLabel: "Deadline",
   privacy: "Only the organizer sees what you submit.",
   whoTitle: "Who are you?",
@@ -60,7 +60,7 @@ const en = {
   dialogEyebrow: "An award for",
   awardName: "Award name",
   awardExamples: [
-    "The Inbox Zero Award",
+    "The Corporate Acronym Expert",
     "The Last-Minute Deck Hero Award",
     "The Excel Whisperer Award",
     "The Coffee Machine Diplomat Award",
@@ -144,12 +144,12 @@ const fr: typeof en = {
   switchLang: "Switch to English",
 
   how: [
-    "Recommande tes collègues pour des catégories de prix\u00a0: invente la catégorie (par exemple «\u00a0Le prix Boîte de réception zéro\u00a0») et dis-nous pourquoi.",
+    "Recommande tes collègues pour des catégories de prix\u00a0: invente la catégorie (par exemple «\u00a0L'as des acronymes corporatifs\u00a0») et dis-nous pourquoi.",
     "Tes recommandations influenceront qui gagne quoi aux prix Raimondis.",
     "Vote pour le plus de collègues possible. Tu peux voter plus d'une fois pour la même personne.",
   ],
   tagline: ["Tes collègues.", "Tes catégories.", "Une grande soirée."],
-  marquee: ["Les nominations sont ouvertes", "Les Raimondis", "4e édition", "Vote pour tout le monde", "Aucun divulgâcheur"],
+  marquee: ["Les nominations sont ouvertes", "Les Raimondis", "4e édition", "Vote pour tout le monde"],
   deadlineLabel: "Date limite",
   privacy: "Seul l'organisateur voit ce que tu soumets.",
   whoTitle: "Qui es-tu?",
@@ -175,7 +175,7 @@ const fr: typeof en = {
   dialogEyebrow: "Un prix pour",
   awardName: "Nom du prix",
   awardExamples: [
-    "Le prix Boîte de réception zéro",
+    "L'as des acronymes corporatifs",
     "Le prix Sauveur de présentation de dernière minute",
     "Le prix Chuchoteur d'Excel",
     "Le prix Diplomate de la machine à café",
