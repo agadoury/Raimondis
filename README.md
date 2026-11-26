@@ -13,6 +13,8 @@ There are no settings to type in. The only thing to connect is the database.
 3. **Redeploy** so the new variables are picked up: **Deployments → ⋯ on the latest one → Redeploy**.
 4. **Try it.** Open the site, pick your name, choose a code and submit a nomination. Then open `/admin` (password `admin123`) to see it.
 
+If a build ever fails with **No Output Directory named "public"**, the project's Framework Preset is not set to Next.js. `vercel.json` in this repo sets it for you; you can also change it under **Settings → Build and Deployment → Framework Preset**.
+
 Button names in Vercel change now and then; the flow is always: import, deploy, attach Upstash Redis from the Storage tab, redeploy.
 
 ### Clear your test data before sharing the link
