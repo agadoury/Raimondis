@@ -109,7 +109,7 @@ export default function PickVoter() {
           >
             <p className="eyebrow mb-5 text-purple-pale">{t.step(2)}</p>
             <div className="flex items-center gap-4">
-              <Avatar name={picked.name} size="lg" />
+              <Avatar person={picked} size="lg" />
               <div>
                 <p className="text-lg font-semibold">{picked.name}</p>
                 <button type="button" onClick={() => (setPicked(null), setCode(""), setError(null))} className="link text-sm">

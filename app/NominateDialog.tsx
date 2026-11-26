@@ -86,7 +86,7 @@ function Form({ nominee, existing, onSaved, onCancel }: FormProps) {
       }}
     >
       <div className="flex items-center gap-4">
-        <Avatar name={nominee.name} size="lg" />
+        <Avatar person={nominee} size="lg" />
         <h2 id="nominate-title">
           <span className="eyebrow block text-purple-pale">{t.dialogEyebrow}</span>{" "}
           <span className="mt-1 block font-serif text-3xl leading-[1.05] sm:text-4xl">{nominee.name}</span>

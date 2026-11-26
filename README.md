@@ -31,6 +31,16 @@ In Vercel, open **Storage → your database → Open in Upstash**, go to the **D
 - **The deadline is shown, not enforced.** The site keeps accepting nominations after the date in the header.
 - **Anyone with the link can open the site** and see the list of names. The 4-digit code protects each person's nominations, not the site itself, so share the link with the team only.
 
+## Adding photos (optional)
+
+Cards show each person's initials by default. To show a photo instead:
+
+1. Name each image after the person's `id` in `data/colleagues.json`, for example `alex-gadoury.jpg` or `francois-xavier-groulx.png`. JPG, PNG and WebP work. Square, face-centred photos look best; any size is fine.
+2. Put the files in the `public/photos` folder. On GitHub: open that folder, then **Add file → Upload files**, and commit.
+3. Vercel redeploys on its own, and those people's cards now show their photo. Anyone without a file keeps their initials.
+
+Photos appear in black and white, and turn to colour with a gold frame once you have nominated the person. Only add photos people are happy to have on the site: anyone with the link can see them.
+
 ## Things you may want to change
 
 | What | Where |
@@ -60,6 +70,7 @@ To use the real database locally, copy `.env.example` to `.env.local` and paste 
 
 ```
 data/colleagues.json   the team
+public/photos/         optional photos, one per person, named after their id
 lib/shared.ts          sorting, accent-free search, initials (used by server and browser)
 lib/i18n.ts            every UI string, EN + FR, and the deadline
 lib/config.ts          server-only settings (admin password, rate limits)

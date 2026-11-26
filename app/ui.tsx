@@ -1,5 +1,6 @@
 // Small presentational pieces shared across screens.
-import { initials } from "@/lib/shared";
+import Image from "next/image";
+import { initials, photoOf } from "@/lib/shared";
 
 /** The brand ">" mark. */
 export function Chevron({ className = "" }: { className?: string }) {
@@ -10,9 +11,14 @@ export function Chevron({ className = "" }: { className?: string }) {
   );
 }
 
-/** A square monogram tile: serif initials on core purple. */
-export function Avatar({ name, size = "md" }: { name: string; size?: "sm" | "md" | "lg" }) {
+/** A square tile: the person's photo if there is one, otherwise serif initials on core purple. */
+export function Avatar({ person, size = "md" }: { person: { id: string; name: string }; size?: "sm" | "md" | "lg" }) {
+  const { name } = person;
   const dims = { sm: "size-8 text-sm", md: "size-11 text-lg", lg: "size-16 text-2xl" }[size];
+  const photo = photoOf(person.id);
+  if (photo) {
+    return <Image src={photo} alt="" width={128} height={128} className={`shrink-0 object-cover ${dims}`} />;
+  }
   return (
     <span
       aria-hidden="true"

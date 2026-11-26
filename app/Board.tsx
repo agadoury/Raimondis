@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
-import { COLLEAGUES, findColleague, initials, matches, type Colleague, type OwnNomination } from "@/lib/shared";
+import Image from "next/image";
+import { COLLEAGUES, findColleague, initials, matches, photoOf, type Colleague, type OwnNomination } from "@/lib/shared";
 import { deleteOwnNomination, signOut } from "./actions";
 import { formatDeadline } from "@/lib/i18n";
 import { useLang } from "./lang";
@@ -142,6 +143,7 @@ export default function Board({ voter, initialNominations }: Props) {
           {visible.map((c) => {
             const count = counts.get(c.id) ?? 0;
             const number = String(others.indexOf(c) + 1).padStart(2, "0");
+            const photo = photoOf(c.id);
             return (
               <li key={c.id} className="border-r border-b border-line">
                 <button
@@ -165,14 +167,27 @@ export default function Board({ voter, initialNominations }: Props) {
                       </span>
                     )}
                   </span>
-                  <span
-                    aria-hidden="true"
-                    className={`mt-auto font-serif text-5xl leading-none italic transition-colors group-hover:text-white sm:text-6xl ${
-                      count ? "text-gold" : "text-purple-light"
-                    }`}
-                  >
-                    {initials(c.name)}
-                  </span>
+                  {photo ? (
+                    // Black and white until you hover or have nominated them; then colour, framed in gold.
+                    <Image
+                      src={photo}
+                      alt=""
+                      width={192}
+                      height={192}
+                      className={`mt-auto size-20 object-cover transition duration-300 group-hover:grayscale-0 sm:size-24 ${
+                        count ? "outline-2 outline-offset-2 outline-gold" : "grayscale"
+                      }`}
+                    />
+                  ) : (
+                    <span
+                      aria-hidden="true"
+                      className={`mt-auto font-serif text-5xl leading-none italic transition-colors group-hover:text-white sm:text-6xl ${
+                        count ? "text-gold" : "text-purple-light"
+                      }`}
+                    >
+                      {initials(c.name)}
+                    </span>
+                  )}
                   <span className="mt-3 flex items-end justify-between gap-2">
                     <span className="leading-tight font-medium">{c.name}</span>
                     <Chevron className="nudge mb-0.5 size-3 shrink-0 text-white/30 transition-colors group-hover:text-white" />

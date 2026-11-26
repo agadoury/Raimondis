@@ -138,7 +138,7 @@ export function AdminTable({ nominations, codeHolders }: TableProps) {
       {groups.map(({ colleague, items }) => (
         <section key={colleague.id} className="card mt-6 overflow-hidden">
           <h3 className="flex items-center gap-3 border-b border-line bg-surface-2 px-4 py-3 text-lg font-semibold">
-            <Avatar name={colleague.name} size="sm" />
+            <Avatar person={colleague} size="sm" />
             {colleague.name}
             <span className="foil ml-auto min-w-7 px-2 py-0.5 text-center text-xs font-bold tabular-nums">{items.length}</span>
           </h3>
