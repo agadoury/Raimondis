@@ -5,7 +5,7 @@ import { formatDeadline, type ErrorCode } from "@/lib/i18n";
 import { COLLEAGUES, matches, type Colleague } from "@/lib/shared";
 import { signIn } from "./actions";
 import { useLang } from "./lang";
-import { Avatar, Chevron, Marquee } from "./ui";
+import { Avatar, Chevron } from "./ui";
 
 /** Landing page: what this is, "Who are you?", then a 4-digit code so we can remember you. */
 export default function PickVoter() {
@@ -30,83 +30,61 @@ export default function PickVoter() {
 
   return (
     <>
-      {/* Hero */}
+      {/* Hero: what this is, in three lines, and the deadline. Nothing else. */}
       <section className="hero relative overflow-hidden border-b border-line">
-        <div className="wrap relative pt-12 pb-12 sm:pt-20 sm:pb-20">
-          <Chevron className="hero-chevron absolute top-4 -right-[10vw] size-[58vw] text-purple sm:top-1/2 sm:right-4 sm:size-[26rem] sm:-translate-y-1/2 lg:size-[31rem]" />
-          <p className="eyebrow fade-up relative text-purple-pale">{t.edition}</p>
-          <h1 className="hero-title relative mt-5 font-serif text-[clamp(3.7rem,17.5vw,11.5rem)] leading-[0.86] tracking-[-0.025em]">
-            <span className="-mb-[0.14em] block overflow-hidden pb-[0.14em]">
-              <span className="rise block italic">Les</span>
-            </span>
-            <span className="-mb-[0.14em] block overflow-hidden pb-[0.14em]">
-              <span className="rise block [animation-delay:90ms]">Raimondis</span>
+        <div className="wrap relative py-9 sm:py-11">
+          <Chevron className="hero-chevron absolute top-3 -right-[9vw] size-[30vw] text-purple sm:top-1/2 sm:right-8 sm:size-64 sm:-translate-y-1/2 lg:size-80" />
+          <p className="eyebrow relative text-purple-pale">{t.edition}</p>
+          <h1 className="hero-title relative mt-3 -mb-[0.14em] overflow-hidden pb-[0.14em] font-serif text-[clamp(3rem,13.5vw,6.75rem)] leading-[0.95] tracking-[-0.025em] whitespace-nowrap">
+            <span className="rise block">
+              <i>Les</i> Raimondis
             </span>
           </h1>
-          <p className="fade-up relative mt-8 text-lg text-white/85 [animation-delay:350ms] sm:text-xl">
-            {t.tagline.map((phrase) => (
-              <span key={phrase} className="mr-[0.35em] inline-block">
-                {phrase}
-              </span>
+          <ul className="relative mt-6 max-w-2xl space-y-2 leading-snug text-white/90 sm:text-[1.0625rem]">
+            {t.how.map((line) => (
+              <li key={line} className="flex gap-3">
+                <Chevron className="mt-[0.4em] size-2.5 shrink-0 text-purple-light" />
+                {line}
+              </li>
             ))}
-          </p>
-        </div>
-        <Marquee items={[...t.marquee, `${t.deadlineLabel} ${deadline}`]} />
-      </section>
-
-      {/* How it works */}
-      <section className="border-b border-line">
-        <ol className="wrap grid sm:grid-cols-3 sm:gap-x-10">
-          {t.how.map((line, i) => (
-            <li key={i} className="border-b border-line py-7 last:border-b-0 sm:border-b-0 sm:py-12">
-              <span aria-hidden="true" className="font-serif text-5xl leading-none text-purple-light italic">
-                0{i + 1}
-              </span>
-              <p className="mt-4 text-[1.0625rem] leading-relaxed text-white/90">{line}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-      <section className="border-b border-line bg-surface">
-        <div className="wrap flex flex-col justify-between gap-1 py-4 sm:flex-row sm:items-center">
-          <p className="eyebrow">
+          </ul>
+          <p className="eyebrow relative mt-6 flex flex-col gap-x-6 gap-y-1 sm:flex-row">
             <span className="foil-text">
               {t.deadlineLabel} — {deadline}
             </span>
+            <span>{t.privacy}</span>
           </p>
-          <p className="eyebrow">{t.privacy}</p>
         </div>
       </section>
 
-      {/* Who are you? → 4-digit code */}
-      <section className="wrap pt-12 sm:pt-16">
+      {/* Step 1: who are you? → Step 2: 4-digit code */}
+      <section className="wrap pt-9 sm:pt-11">
         {!picked ? (
           <>
-            <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <h2 className="font-serif text-5xl leading-none sm:text-6xl">{t.whoTitle}</h2>
-                <p className="mt-4 text-muted">{t.whoHint}</p>
-              </div>
-              {/* Enter picks the first match */}
-              <form
-                className="w-full sm:w-80"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (list[0]) setPicked(list[0]);
-                }}
-              >
-                <input
-                  type="search"
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder={t.searchNames}
-                  aria-label={t.searchNames}
-                  className="input"
-                />
-              </form>
-            </div>
+            <p className="eyebrow text-purple-pale">
+              {t.step(1)} — {t.startHere}
+            </p>
+            <h2 className="mt-2 font-serif text-5xl leading-none sm:text-6xl">{t.whoTitle}</h2>
+            <p className="mt-3 text-muted">{t.whoHint}</p>
+            {/* Enter picks the first match */}
+            <form
+              className="mt-5 max-w-md"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (list[0]) setPicked(list[0]);
+              }}
+            >
+              <input
+                type="search"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder={t.searchNames}
+                aria-label={t.searchNames}
+                className="input border-purple-light/70 py-4 text-lg"
+              />
+            </form>
 
-            <ul className="mt-8 grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-3">
+            <ul className="mt-6 grid border-t border-l border-line sm:grid-cols-2 lg:grid-cols-3">
               {list.map((c) => (
                 <li key={c.id} className="border-r border-b border-line">
                   <button
@@ -131,6 +109,7 @@ export default function PickVoter() {
               submit();
             }}
           >
+            <p className="eyebrow mb-5 text-purple-pale">{t.step(2)}</p>
             <div className="flex items-center gap-4">
               <Avatar name={picked.name} size="lg" />
               <div>

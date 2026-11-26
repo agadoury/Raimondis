@@ -34,26 +34,6 @@ export function GoldCheck({ className = "size-5" }: { className?: string }) {
   );
 }
 
-/** A slow ticker, like the crawl at the bottom of a broadcast. Purely decorative. */
-export function Marquee({ items }: { items: string[] }) {
-  const row = (
-    <div className="marquee-row flex shrink-0 items-center">
-      {[...items, ...items, ...items].map((item, i) => (
-        <span key={i} className="flex items-center gap-8 pr-8 whitespace-nowrap">
-          {item}
-          <Chevron className="size-2.5 text-purple" />
-        </span>
-      ))}
-    </div>
-  );
-  return (
-    <div aria-hidden="true" className="eyebrow flex overflow-hidden border-t border-line py-3.5 text-white/90">
-      {row}
-      {row}
-    </div>
-  );
-}
-
 const CONFETTI_COLORS = ["#e3bf62", "#a100ff", "#fff0b5", "#ffffff", "#be82ff"];
 
 /** A short, CSS-only burst. Remount it (change its key) to replay. Hidden for reduced-motion users. */
