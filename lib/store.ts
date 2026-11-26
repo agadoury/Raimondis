@@ -38,12 +38,30 @@ function memoryClient(): Client {
   };
 }
 
+/**
+ * The Redis URL and token that the Upstash integration adds to the Vercel project.
+ * Also accepts the names with a custom prefix (e.g. STORAGE_KV_REST_API_URL).
+ */
+export function redisCredentials() {
+  const find = (...names: string[]) => {
+    for (const name of names) {
+      const key = Object.keys(process.env).find((k) => k === name || k.endsWith(`_${name}`));
+      if (key && process.env[key]) return process.env[key];
+    }
+  };
+  const url = find("KV_REST_API_URL", "UPSTASH_REDIS_REST_URL");
+  const token = find("KV_REST_API_TOKEN", "UPSTASH_REDIS_REST_TOKEN");
+  return url && token ? { url, token } : null;
+}
+
+/** False on Vercel until Upstash for Redis is connected to the project (and the site redeployed). */
+export const isConfigured = () => !process.env.VERCEL || redisCredentials() !== null;
+
 let client: Client | undefined;
 function redis(): Client {
   if (client) return client;
-  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (url && token) return (client = new Redis({ url, token }) as unknown as Client);
+  const credentials = redisCredentials();
+  if (credentials) return (client = new Redis(credentials) as unknown as Client);
   if (process.env.VERCEL) {
     throw new Error("Redis is not configured. Connect Upstash for Redis to this project in Vercel → Storage.");
   }

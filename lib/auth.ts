@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { ADMIN_PASSWORD } from "./config";
 import { findColleague } from "./shared";
+import { redisCredentials } from "./store";
 
 const VOTER = "rv_voter"; // "<colleagueId>.<signature>": who is signed in
 const ADMIN = "rv_admin";
@@ -12,8 +13,7 @@ const LONG = { httpOnly: true, secure, sameSite: "lax", path: "/", maxAge: 60 * 
 
 // Cookies and codes are signed with a secret nobody has to set up: the Redis
 // token that the Upstash integration adds to the project.
-const secret = () =>
-  process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || "local-development-secret";
+const secret = () => redisCredentials()?.token ?? "local-development-secret";
 
 const sign = (value: string) => createHmac("sha256", secret()).update(value).digest("base64url");
 

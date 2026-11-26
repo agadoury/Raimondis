@@ -9,9 +9,11 @@ Next.js (App Router) · Tailwind CSS · Upstash Redis · English / French.
 There are no settings to type in. The only thing to connect is the database.
 
 1. **Import the repo.** In [Vercel](https://vercel.com/new), choose **Add New → Project**, import this GitHub repository, keep every default and click **Deploy**. The site builds, but nothing can be saved until step 2.
-2. **Add the database.** Open the project, go to the **Storage** tab, click **Create Database**, and pick **Upstash → Upstash for Redis**. Choose the **Free** plan and a region near you (for example `us-east-1`), then **connect it to this project** for all environments. Leave the "custom prefix" field empty. This adds `KV_REST_API_URL` and `KV_REST_API_TOKEN` to the project for you.
+2. **Add the database.** Open the project, go to the **Storage** tab, click **Create Database**, and pick **Upstash → Upstash for Redis**. Choose the **Free** plan and a region near you (for example `us-east-1`), then **connect it to this project** for all environments. This adds `KV_REST_API_URL` and `KV_REST_API_TOKEN` to the project for you.
 3. **Redeploy** so the new variables are picked up: **Deployments → ⋯ on the latest one → Redeploy**.
 4. **Try it.** Open the site, pick your name, choose a code and submit a nomination. Then click **Admin** in the footer (password `admin123`) to see it.
+
+If signing in shows **"The site's database isn't connected yet"**, step 2 or 3 is missing: connect Upstash for Redis, then redeploy. If it shows "Something went wrong", the database is connected but not answering; check the function logs in Vercel.
 
 If a build ever fails with **No Output Directory named "public"**, the project's Framework Preset is not set to Next.js. `vercel.json` in this repo sets it for you; you can also change it under **Settings → Build and Deployment → Framework Preset**.
 

@@ -100,6 +100,7 @@ const en = {
     reasonTooLong: `The reason must be ${REASON_MAX} characters or less.`,
     rateLimited: "Whoa, that's a lot of awards! Take a breather and try again in a bit.",
     deleteFailed: "Couldn't delete this one. Please try again.",
+    notConfigured: "The site's database isn't connected yet. Organizer: add Upstash for Redis in Vercel (Storage tab), then redeploy.",
     generic: "Something went wrong. Please try again.",
   },
 
@@ -214,6 +215,7 @@ const fr: typeof en = {
     reasonTooLong: `La raison doit faire ${REASON_MAX} caractères ou moins.`,
     rateLimited: "Wow, ça fait beaucoup de prix! Prends une pause et réessaie dans un moment.",
     deleteFailed: "Impossible de supprimer celle-ci. Réessaie.",
+    notConfigured: "La base de données du site n'est pas encore connectée. Organisateur\u00a0: ajoute Upstash for Redis dans Vercel (onglet Storage), puis redéploie.",
     generic: "Une erreur est survenue. Réessaie.",
   },
 

@@ -16,6 +16,7 @@ export async function signIn(voterId: string, code: string): Promise<{ error: Er
   const voter = findColleague(String(voterId ?? ""));
   if (!voter) return { error: "pickName" };
   if (!/^\d{4}$/.test(String(code ?? ""))) return { error: "codeFormat" };
+  if (!store.isConfigured()) return { error: "notConfigured" };
   try {
     if (await store.overLimit("signin", voter.id, SIGN_IN_ATTEMPTS_PER_HOUR)) return { error: "tooManyAttempts" };
     if (!(await store.saveOrCheckCode(voter.id, auth.hashCode(voter.id, code)))) return { error: "wrongCode" };
