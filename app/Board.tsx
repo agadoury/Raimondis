@@ -95,8 +95,9 @@ export default function Board({ voter, initialNominations }: Props) {
   return (
     <>
       <div className="wrap pt-10 sm:pt-14">
-        <p className="eyebrow text-purple-pale">
-          {t.edition} — {t.deadline(formatDeadline(lang))}
+        {/* Kept short and slightly tighter on phones so it stays on one line. */}
+        <p className="eyebrow text-[0.625rem] tracking-[0.12em] text-purple-pale sm:text-[0.6875rem] sm:tracking-[0.2em]">
+          {t.edition} — {t.deadlineLabel} {formatDeadline(lang)}
         </p>
         <div className="mt-4 flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
           <h1 className="font-serif text-6xl leading-[0.9] tracking-[-0.02em] sm:text-8xl">{t.hello(voter.name)}</h1>

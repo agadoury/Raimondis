@@ -8,10 +8,11 @@ export const DEFAULT_LANG: Lang = "en";
 /** Nomination deadline shown in the header (YYYY-MM-DD). Change it here. */
 export const DEADLINE = "2026-12-04";
 
+/** "Friday, Dec 4" / "vendredi 4 déc.": short enough to fit one line on a phone. */
 export function formatDeadline(lang: Lang) {
-  return new Intl.DateTimeFormat(lang === "fr" ? "fr-CA" : "en-CA", {
+  return new Intl.DateTimeFormat(lang === "fr" ? "fr-CA" : "en-US", {
     weekday: "long",
-    month: "long",
+    month: "short",
     day: "numeric",
     timeZone: "UTC",
   }).format(new Date(`${DEADLINE}T12:00:00Z`));
