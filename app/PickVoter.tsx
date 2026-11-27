@@ -41,11 +41,10 @@ export default function PickVoter() {
             </span>
           </h1>
           <p className="relative mt-4 hidden text-xl text-white/85 sm:block">{t.tagline}</p>
-          <p className="eyebrow relative mt-4 flex gap-x-6 sm:mt-5">
+          <p className="eyebrow relative mt-4 sm:mt-5">
             <span className="foil-text">
               {t.deadlineLabel} — {deadline}
             </span>
-            <span className="hidden sm:inline">{t.privacy}</span>
           </p>
         </div>
       </section>
