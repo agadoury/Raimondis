@@ -41,6 +41,10 @@ Cards show each person's initials by default. To show a photo instead:
 
 Photos appear in black and white, and turn to colour with a gold frame once you have nominated the person. Only add photos people are happy to have on the site: anyone with the link can see them.
 
+## The intro
+
+The first time someone opens the site, a short animated intro plays in a popup: what the Raimondis are, what to do, and the deadline. It can be skipped at any point and replayed with **Watch the intro** on the landing page. Its text is under `tour` in `lib/i18n.ts`; the timing of each screen is `SECONDS` in `app/Intro.tsx`.
+
 ## Things you may want to change
 
 | What | Where |
@@ -79,6 +83,7 @@ lib/store.ts           the only file that talks to Redis
 app/actions.ts         the only way to write: sign in, submit, delete, admin login, set a code
 app/page.tsx           "Who are you?" → nomination board
 app/PickVoter.tsx      landing page: title, name list, 4-digit code
+app/Intro.tsx          the animated intro popup
 app/admin/             results table, login codes and CSV export
 ```
 

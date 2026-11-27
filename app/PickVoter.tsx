@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { formatDeadline, type ErrorCode } from "@/lib/i18n";
 import { COLLEAGUES, matches, type Colleague } from "@/lib/shared";
 import { signIn } from "./actions";
+import Intro from "./Intro";
 import { useLang } from "./lang";
 import { Avatar, Chevron } from "./ui";
 
@@ -15,6 +16,8 @@ export default function PickVoter() {
   const [code, setCode] = useState("");
   const [error, setError] = useState<ErrorCode | null>(null);
   const [pending, startTransition] = useTransition();
+  const [replayIntro, setReplayIntro] = useState(false);
+  const search = useRef<HTMLInputElement>(null);
   const list = COLLEAGUES.filter((c) => matches(c.name, query));
   const deadline = formatDeadline(lang);
 
@@ -30,6 +33,13 @@ export default function PickVoter() {
 
   return (
     <>
+      {/* Plays by itself on a first visit; "Watch the intro" replays it. Its last button jumps to the name search. */}
+      <Intro
+        replay={replayIntro}
+        onClose={() => setReplayIntro(false)}
+        onStart={() => setTimeout(() => search.current?.focus(), 50)}
+      />
+
       {/* Hero: title, tagline (desktop only) and deadline. Kept short so "Who are you?" follows at once. */}
       <section className="hero relative overflow-hidden border-b border-line">
         <div className="wrap relative py-8 sm:py-9">
@@ -41,10 +51,20 @@ export default function PickVoter() {
             </span>
           </h1>
           <p className="relative mt-4 hidden text-xl text-white/85 sm:block">{t.tagline}</p>
-          <p className="eyebrow relative mt-4 sm:mt-5">
+          <p className="eyebrow relative mt-4 flex flex-wrap items-center gap-x-6 gap-y-2 sm:mt-5">
             <span className="foil-text">
               {t.deadlineLabel} — {deadline}
             </span>
+            <button
+              type="button"
+              onClick={() => setReplayIntro(true)}
+              className="eyebrow flex cursor-pointer items-center gap-2 text-white underline decoration-purple decoration-1 underline-offset-4 hover:text-purple-pale"
+            >
+              <svg viewBox="0 0 12 12" aria-hidden="true" className="size-2.5 text-purple">
+                <path d="M2 1v10l9-5z" fill="currentColor" />
+              </svg>
+              {t.tour.watch}
+            </button>
           </p>
         </div>
       </section>
@@ -72,6 +92,7 @@ export default function PickVoter() {
               >
                 <input
                   type="search"
+                  ref={search}
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder={t.searchNames}

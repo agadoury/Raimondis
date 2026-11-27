@@ -4,7 +4,8 @@ Run through this once on the live site before sharing the link. It takes about t
 
 ## 1. Voter flow
 
-- [ ] The site opens straight on the landing page: the title, the deadline (Friday, Dec 4), then "Step 1 of 2 — Who are you?" with 32 names in alphabetical order by first name. No password is asked.
+- [ ] On a first visit (use a private window), the intro popup opens and plays through its five screens by itself. **Skip**, **Back**, **Next** and the final **Pick your name** button all work, and it does not open again on reload. **Watch the intro** replays it.
+- [ ] Behind the popup, the site opens straight on the landing page: the title, the deadline (Friday, Dec 4), then "Step 1 of 2 — Who are you?" with 32 names in alphabetical order by first name. No password is asked.
 - [ ] Typing `eloise` shows both Éloïse Turgeon and Eloïse Provost-Carrière; `francois` shows François-Xavier Groulx.
 - [ ] Picking a name asks for a 4-digit code. Fewer than 4 digits shows an error; letters can't be typed.
 - [ ] After choosing a code, the grid shows 31 cards and yours is missing. The progress line reads "You've nominated 0 of 31 colleagues".

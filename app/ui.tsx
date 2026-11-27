@@ -3,9 +3,9 @@ import Image from "next/image";
 import { initials, photoOf } from "@/lib/shared";
 
 /** The brand ">" mark. */
-export function Chevron({ className = "" }: { className?: string }) {
+export function Chevron({ className = "", style }: { className?: string; style?: React.CSSProperties }) {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" className={className}>
+    <svg viewBox="0 0 24 24" aria-hidden="true" className={className} style={style}>
       <path d="M3 3 21 12 3 21v-4.2L12.6 12 3 7.2z" fill="currentColor" />
     </svg>
   );

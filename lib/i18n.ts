@@ -41,6 +41,23 @@ const en = {
   codeHint: "First visit? Choose any 4 digits (not your bank PIN) and remember them. Coming back? Enter the same code to find your nominations.",
   start: "Start nominating",
 
+  // Animated intro (opens on a first visit)
+  tour: {
+    label: "Introduction to Les Raimondis",
+    watch: "Watch the intro",
+    skip: "Skip",
+    back: "Back",
+    next: "Next",
+    start: "Pick your name",
+    scenes: (deadline: string) => [
+      { title: "Welcome to Les Raimondis.", body: "Our team's end-of-year award show. Think the Dundies, but ours. This is the 4th edition." },
+      { title: "You invent the awards.", body: "Pick a colleague, make up an award category for them (say, “The Corporate Acronym Expert”) and tell us why they deserve it." },
+      { title: "Your votes shape the night.", body: "Your recommendations influence who wins what at the Raimondis awards." },
+      { title: "Vote for everyone.", body: "Nominate as many colleagues as you can. More than one award for the same person is welcome." },
+      { title: `Deadline: ${deadline}.`, body: "Pick your name, choose a 4-digit code, and start nominating." },
+    ],
+  },
+
   // Board
   hello: (name: string) => `Hi ${firstName(name)}!`,
   notYou: "Not you?",
@@ -159,6 +176,22 @@ const fr: typeof en = {
   codeLabel: "Code à 4 chiffres",
   codeHint: "Première visite? Choisis 4 chiffres (pas ton NIP bancaire) et retiens-les. De retour? Entre le même code pour retrouver tes nominations.",
   start: "Commencer à voter",
+
+  tour: {
+    label: "Présentation des Raimondis",
+    watch: "Voir l'intro",
+    skip: "Passer",
+    back: "Retour",
+    next: "Suivant",
+    start: "Choisir mon nom",
+    scenes: (deadline) => [
+      { title: "Bienvenue aux Raimondis.", body: "Le gala de fin d'année de notre équipe. Comme les Dundies, mais à notre façon. C'est la 4e édition." },
+      { title: "C'est toi qui inventes les prix.", body: "Choisis un collègue, invente-lui une catégorie de prix (par exemple «\u00a0L'as des acronymes corporatifs\u00a0») et dis-nous pourquoi il ou elle le mérite." },
+      { title: "Tes votes font la soirée.", body: "Tes recommandations influenceront qui gagne quoi aux prix Raimondis." },
+      { title: "Vote pour tout le monde.", body: "Mets en nomination le plus de collègues possible. Plusieurs prix pour la même personne, c'est permis." },
+      { title: `Date limite\u00a0: ${deadline}.`, body: "Choisis ton nom, crée ton code à 4 chiffres et commence à voter." },
+    ],
+  },
 
   hello: (name) => `Salut ${firstName(name)}!`,
   notYou: "Ce n'est pas toi?",
