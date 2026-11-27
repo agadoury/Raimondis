@@ -43,7 +43,7 @@ Photos appear in black and white, and turn to colour with a gold frame once you 
 
 ## The intro
 
-The first time someone opens the site, a short animated intro plays in a popup: what the Raimondis are, what to do, and the deadline. It can be skipped at any point and replayed with **Watch the intro** on the landing page. Its text is under `tour` in `lib/i18n.ts`; the timing of each screen is `SECONDS` in `app/Intro.tsx`.
+The first time someone opens the site, a short animated intro plays in a popup, like a 30-second video: what the Raimondis are, what to do, and the deadline. It can be skipped at any point, stepped through with the arrows or by tapping either side, and replayed with **Watch the intro** on the landing page. Its text is under `tour` in `lib/i18n.ts`; the length of each scene is `SECONDS` in `app/Intro.tsx`.
 
 ## Things you may want to change
 
